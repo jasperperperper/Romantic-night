@@ -1,0 +1,52 @@
+def find():
+    choice = result[0]
+    location = result[1]
+    content = ''
+    import csv
+    if choice == '酒吧':  # 開啓酒吧的csv檔
+        infile = 'Taipei_Bar.csv'
+    if choice == '旅館':  # 開啓旅館的csv檔
+        infile = 'Taipei_Hotel.csv'
+
+    with open(infile, mode='r', encoding='utf-8', errors='ignore') as data:
+        csvreader = csv.reader(data)
+        header = []
+        header = next(csvreader)
+        rows = []
+        try:
+            for row in csvreader:
+                rows.append(row)
+        except Exception:
+            pass
+    best_rating = 0
+    num_comment = 0
+    count = 0
+    rank_rating = []
+    rank_comment = []
+    for row in rows:
+        count += 1
+        if location in row[4]:  # 對應地址
+            rating = float(row[17])
+            comment = float(row[22])
+            if rating >= best_rating:
+                best_rating = rating
+                rank_rating.append(count-1)  # 記錄該評價在第幾行
+            if comment >= num_comment:
+                num_comment = comment
+                rank_comment.append(count-1)
+    same = list(set(rank_rating) & set(rank_comment))  # 評價和留言數都榜上有名
+    if len(same) >= 3:
+        output = same[-3:]  # 只印出最後三個（最好）
+    else:
+        output = same  # 不足三個
+    output = [int(x) for x in output]
+    for row in output:
+        name = rows[row][11]
+        telephone = rows[row][5]
+        website = rows[row][-2]
+        google_map = rows[row][-6]
+        content += f"{name} \n{telephone} \n{website} \n{google_map}\n\n"
+    return content
+
+
+print(find())
