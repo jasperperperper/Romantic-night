@@ -1,0 +1,75 @@
+# 評論
+
+
+# input
+
+# 以每間 hotels & bars 編號，建list
+# 心情類別[評論數(預設為0),心情編號(0-5)] list
+mood_list = []
+
+for mood in range(6): # 假設有六種心情
+    mood_list.append([0, mood])
+
+# hotels 1371間，編號0-1370
+hotel_list = []
+
+for hotel in range(1514):
+	hotel_list.append([hotel, mood_list])
+
+# bars 1513間，編號0-1512
+bar_list = []
+
+for bar in range(1514):
+	bar_list.append([bar, mood_list])
+
+where = 0 # 0 for hotels(預設), others for bars，系統輸入
+where = int(input())
+
+# operation
+
+mood_review = 999
+print('評論可以拿優惠券喔')
+
+if where == 0:
+    hotel = int(input()) # hotel 編號，系統輸入
+    
+    # 輸入心情評論或按略過
+    mood_review = int(input()) # 心情評論編號，使用者輸入 or 按略過鍵使 mood_review = 999
+
+    if mood_review < 6: # if 要評論， mood_review 只會有0-5的 int
+        hotel_list[hotel][1][mood_review][0] += 1
+    else:
+        print('你剛剛錯過了W hotel 免費入住一晚兌換券，真可惜')
+else:
+    bar = int(input()) # bar 編號，系統輸入
+
+    # 輸入心情評論或按略過
+    mood_review = int(input()) # 心情評論編號，使用者輸入 or 按略過鍵使 mood_review = 999
+
+    if mood_review < 6: # if 要評論， mood_review 只會有0-5的 int
+        bar_list[bar][1][mood_review][0] += 1
+    else:
+        print('你剛剛錯過了免費調酒兌換券，真可惜')
+
+
+# 查看心情標籤（取前三高票者）
+
+judge = []
+
+if where == 0:
+    hotel = int(input()) 
+    judge = hotel_list[hotel][1]
+    judge.sort()
+    judge.reverse()
+    print(judge)
+
+    for rank in range(3):
+        print(judge[rank][1])
+else:
+    bar = int(input())
+    judge = bar_list[bar][1]
+    judge.sort()
+    judge.reverse()
+
+    for rank in range(3):
+        print(judge[rank][1])
