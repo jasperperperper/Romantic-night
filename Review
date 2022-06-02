@@ -1,7 +1,12 @@
-# 評論
+# 評論&貢獻
 
 
 # input
+
+# 以使用者編號建list，二維[貢獻分數, 使用者編號]
+user_list = [] #應該其他塊要先建好
+
+
 
 # 以每間 hotels & bars 編號，建list
 # 心情類別[評論數(預設為0),心情編號(0-5)] list
@@ -38,6 +43,7 @@ if where == 0:
 
     if mood_review < 6: # if 要評論， mood_review 只會有0-5的 int
         hotel_list[hotel][1][mood_review][0] += 1
+        # 使用者編號下的貢獻分數加一
     else:
         print('你剛剛錯過了W hotel 免費入住一晚兌換券，真可惜')
 else:
@@ -73,3 +79,11 @@ else:
 
     for rank in range(3):
         print(judge[rank][1])
+
+# 查看分數前三高的使用者
+
+'''user_list.sort()
+user_list.reverse()
+
+for rank in range(3):
+    print(user_list[rank][1])'''
